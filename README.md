@@ -1,102 +1,71 @@
-```markdown
-# DHCP Obfuscator
+# 🕵️‍♂️ DHCP Obfuscator: Network Identity Anonymizer
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Bash](https://img.shields.io/badge/Language-Bash-green.svg)]()
-[![Platform: Linux](https://img.shields.io/badge/Platform-Linux-lightgrey.svg)]()
+![License](https://img.shields.io/github/license/gekko4/dhcp-obfuscator)
+![Shell Script](https://img.shields.io/badge/language-shell-green)
+![Dependencies](https://img.shields.io/badge/dependencies-nmcli%20%7C%20figlet-blue)
 
-A lightweight, terminal-based Bash script designed to systematically hide your Linux device from network routers. It neutralizes network profiling on public or untrusted Wi-Fi by spoofing your hardware address and deeply scrubbing your DHCP fingerprints.
-
----
-
-## Table of Contents
-- [Why Use This?](#why-use-this)
-- [Features & Technical Breakdown](#features--technical-breakdown)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [How to Revert Changes](#how-to-revert-changes)
-- [Troubleshooting](#troubleshooting)
-- [Disclaimer](#disclaimer)
+**DHCP Obfuscator** is a lightweight, interactive Bash script designed to anonymize your network footprint. By modifying your NetworkManager connection properties via `nmcli`, it prevents network administrators and eavesdroppers from identifying your device on local networks (like public Wi-Fi) by stripping identifiable metadata from your DHCP requests.
 
 ---
 
-## Why Use This?
-When you connect to a Wi-Fi network, your device hands over a significant amount of identifying information to the router via DHCP requests. This usually includes your permanent hardware MAC address, your computer's hostname (e.g., `kyale-ParrotOS`), and your operating system's vendor class. Network administrators and captive portals use this data to track your physical device across different sessions, monitor your traffic, or enforce time limits. 
+<!-- IMAGE PLACEHOLDER: Place an animated GIF or a screenshot of the terminal here showing the script running (e.g., the cool figlet banner and the prompts). -->
+*(Insert a screenshot of the script in action here: `![Demo](link_to_image.png)`)*
 
-**DHCP Obfuscator** automates the process of blanking out or randomizing these identifiers, making your machine look like a completely new, anonymous device every time you connect.
+## 🚀 Features
 
-## Features & Technical Breakdown
-This script utilizes `nmcli` to modify the following connection parameters permanently for the specified network:
+When you connect to a network, your device leaks metadata by default. This script hardens your connection by applying the following privacy enhancements:
 
-*   **MAC Randomization:** Spoofs your physical hardware ID (`wifi.cloned-mac-address random`, `ethernet.cloned-mac-address random`).
-*   **Hostname Erasure (DHCP Option 12):** Stops your device from broadcasting its system name to the network (`ipv4.dhcp-send-hostname no`).
-*   **Client ID Scrubbing:** Forces the DHCP client ID to match your new, randomized MAC address instead of a static identifier (`ipv4.dhcp-client-id mac`).
-*   **Vendor Class Cloaking (DHCP Option 60):** Injects a blank string to hide your OS and network manager type (`ipv4.dhcp-vendor-class-identifier " "`).
-*   **IPv6 Disabling:** Shuts down IPv6 completely for the target network to prevent secondary IP leakages (`ipv6.method disabled`).
+- 🔀 **Randomized MAC Address**: Automatically randomizes both Wi-Fi and Ethernet MAC addresses (`wifi.cloned-mac-address random`).
+- 🛑 **Erased Hostname**: Prevents your device from broadcasting its hostname via DHCP Option 12.
+- 🧹 **Scrubbed Client ID**: Overrides identifiable DHCP Client IDs to generic MAC-based traces.
+- 👻 **Ghost Vendor Class**: Injects a blank space into the Vendor Class Identifier (Option 60), hiding your OS and device type.
+- 🚫 **IPv6 Leak Protection**: Completely disables IPv6 for the target connection to prevent tracking via static IPv6 addresses.
+- 🔄 **Auto-Restart**: Automatically restarts the connection to immediately apply the new, spoofed network identity.
 
-## Prerequisites
-This tool requires **NetworkManager** to function. It will not work on systems using `netctl` or `systemd-networkd`.
+## 📋 Prerequisites
 
-*   `network-manager` (Provides the required `nmcli` framework)
-*   `figlet` (Optional: highly recommended for the terminal ASCII banner rendering)
+Before using this script, ensure you have the following installed on your Linux system:
 
-*Tested successfully on: Parrot OS, Kali Linux, Debian, and Ubuntu.*
+- `nmcli` (NetworkManager Command Line Interface) - Usually pre-installed on most modern Linux distributions.
+- `figlet` *(Optional)* - Used to generate the cool terminal banner.
 
-## Installation
+To install `figlet` on Debian/Ubuntu-based systems:
+```bash
+sudo apt-get install figlet
+```
+
+## 🛠️ Usage
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/dhcp-obfuscator.git](https://github.com/YOUR_USERNAME/dhcp-obfuscator.git)
+   git clone https://github.com/gekko4/dhcp-obfuscator.git
    cd dhcp-obfuscator
    ```
 
 2. **Make the script executable:**
    ```bash
-   chmod +x dhcp-obfuscator.sh
+   chmod +action dhcp-obfuscator.sh
    ```
 
-3. **Install it to your binaries path** (This allows you to run the command from any directory):
+3. **Run the script (as root/sudo if necessary for nmcli connection changes):**
    ```bash
-   sudo mv dhcp-obfuscator.sh /usr/local/bin/dhcp-obfuscator
+   ./dhcp-obfuscator.sh
    ```
 
-## Usage
+4. **Follow the on-screen prompt:**
+   The script will ask you for the name of the Wi-Fi or Ethernet connection you want to anonymize.
+   ```text
+   Enter the Wi-Fi Connection Name (e.g., Gekko4):
+   ```
+   *Tip: You can list your active connections using `nmcli connection show`.*
 
-Once installed, simply call the tool directly from your terminal:
+<!-- IMAGE PLACEHOLDER: Place a screenshot here showing the "SUCCESS" output and the "New Fake Identity" MAC address. -->
+*(Insert a screenshot of the successful spoofing output here)*
 
-```bash
-dhcp-obfuscator
-```
+## ⚠️ Disclaimer
 
-**Step-by-Step:**
-1. The script will prompt you for the exact name of the connection you want to obfuscate (e.g., `Starbucks_WiFi`). 
-   * *Tip: You can list all your saved connection names by running `nmcli connection show` in another terminal tab.*
-2. Enter the connection name.
-3. The script will apply the obfuscation parameters, bring the network interface down, and restart it with your new identity.
+This tool is provided for educational and privacy-enhancing purposes only. Use it responsibly and only on networks where you are authorized to alter your connection properties.
 
-## How to Revert Changes
+## 📄 License
 
-**Important:** Because `nmcli` saves connection profiles, these obfuscation settings are **permanent** for that specific Wi-Fi network, even after a reboot. 
-
-If you use this on a home or work network and need to restore your original settings (e.g., to bypass a MAC whitelist), the cleanest and safest way is to delete the network profile and reconnect from scratch:
-```bash
-# 1. Delete the modified connection profile
-nmcli connection delete "Your_Connection_Name"
-
-# 2. Reconnect to the network normally via your GUI or terminal
-```
-
-## Troubleshooting
-
-*   **"Error: You must enter a connection name"**
-    *   You left the prompt blank. Run the script again and provide the exact SSID/Connection name.
-*   **"[FAIL] Could not restart connection"**
-    *   This usually means the connection name was misspelled or doesn't exist in your saved NetworkManager profiles. Run `nmcli connection show` to verify the exact spelling (it is case-sensitive).
-*   **Command not found: dhcp-obfuscator**
-    *   Ensure you successfully moved the script to `/usr/local/bin/` and that the directory is in your system's `$PATH`.
-
-## Disclaimer
-
-This tool is provided for educational, research, and personal privacy purposes only. The creator assumes no liability and is not responsible for any misuse or damage caused by this script. Do not use this tool on networks where you do not have explicit permission to obfuscate your traffic or bypass network management policies.
-```
+This project is open-source. See the [LICENSE](LICENSE) file for more information.
