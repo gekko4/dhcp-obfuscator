@@ -92,18 +92,18 @@ Enter the Wi-Fi Connection Name (e.g., Gekko4):
 
 Done!
 
-## 🍎🪟 Alternatives for macOS & Windows
+##  Alternatives for macOS & Windows
 
 Because this script relies entirely on `nmcli` (NetworkManager), it is **strictly for Linux** and cannot be run on macOS or Windows. 
 
 While you cannot easily get the "full package" of per-network DHCP scrubbing (like entirely erasing hostnames, overriding Vendor Class Identifiers, or custom Client IDs) on these operating systems without advanced third-party tools, you can manually reproduce some of the core features:
 
-### 🪟 Windows
+###  Windows
 *   **MAC Randomization:** Windows 10 and 11 have this built-in! Go to **Settings > Network & Internet > Wi-Fi** and toggle on **Random hardware addresses**.
 *   **Hostname Blending:** Unlike Linux (where we can erase the broadcast completely), Windows *will* broadcast your PC name to the network. To protect your identity, you must globally rename your PC to something generic to blend in (e.g., `DESKTOP-12345`) via **System Properties**.
 *   **Disable IPv6:** Open **Network Connections**, right-click your Wi-Fi adapter, select **Properties**, and uncheck **Internet Protocol Version 6 (TCP/IPv6)**.
 
-### 🍎 macOS
+###  macOS
 *   **MAC Spoofing:** Open the Terminal and temporarily spoof your MAC address using: `sudo ifconfig en0 ether <random_mac>` *(replace `en0` with your active adapter and `<random_mac>` with a randomly generated MAC address)*.
 *   **Hostname Blending:** Similar to Windows, you cannot easily stop macOS from sending a hostname. Instead, change your global system name to something generic via Terminal: `sudo scutil --set HostName "Generic-Name"`.
 *   **Disable IPv6:** Disable IPv6 for Wi-Fi via Terminal: `networksetup -setv6off Wi-Fi`.
