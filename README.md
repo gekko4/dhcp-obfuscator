@@ -8,9 +8,6 @@ DHCP Obfuscator is a lightweight, interactive Linux utility to anonymize your ne
 
 ---
 
-<!-- IMAGE PLACEHOLDER 1: Place an animated GIF or a screenshot of the terminal here showing the script running -->
-*(Insert a screenshot of the script in action here)*
-
 ## 📖 Overview
 
 When you connect to a network, your device leaks metadata by default. Network administrators and eavesdroppers can see your device's original MAC address, hostname, operating system details, and client ID. 
@@ -32,8 +29,6 @@ This script hardens your connection by modifying your **NetworkManager** connect
 - **IPv6 Leak Protection**: Completely disables IPv6 for the target connection to prevent tracking via static IPv6 addresses.
 - **Auto-Restart**: Automatically restarts the connection to immediately apply your new, spoofed network identity.
 
-<!-- IMAGE PLACEHOLDER 2: Place a screenshot of your router's admin panel here showing the device listed with a blank hostname/unknown OS, proving the router can no longer identify your device. -->
-*(Insert a screenshot of your router dashboard showing an unidentified device)*
 
 ## 📋 Prerequisites
 
@@ -91,8 +86,10 @@ Enter the Wi-Fi Connection Name (e.g., Gekko4):
 ```
 *Tip: If you aren't sure of the exact name, open a new terminal tab and type `nmcli connection show` to list your saved networks.*
 
-<!-- IMAGE PLACEHOLDER 3: Place a screenshot here showing the terminal's "SUCCESS" output -->
-*(Insert a screenshot of the successful spoofing output here)*
+<img width="1376" height="840" alt="image" src="https://github.com/user-attachments/assets/e7757a09-5d09-40f2-9bdb-37ec6eb2fcd8" />
+
+Done!
+
 
 ## 📄 License
 
