@@ -14,7 +14,7 @@ clear
 # Checks if figlet is installed to draw the art
 if command -v figlet &> /dev/null; then
     echo -e "${RED}"
-    figlet -f slant "DHCP OBFUSCATOR"
+    figlet -f slant "OBFUSCATOR"
     echo -e "${NC}"
 else
     echo -e "${RED}=================================================="
