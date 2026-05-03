@@ -11,7 +11,7 @@ DHCP Obfuscator is a lightweight, interactive Linux utility designed to anonymiz
 <!-- IMAGE PLACEHOLDER: Place an animated GIF or a screenshot of the terminal here showing the script running -->
 *(Insert a screenshot of the script in action here)*
 
-## Overview
+## 📖 Overview
 
 When you connect to a network, your device leaks metadata by default. Network administrators and eavesdroppers can see your device's original MAC address, hostname, operating system details, and client ID. 
 
@@ -22,22 +22,22 @@ This script hardens your connection by modifying your **NetworkManager** connect
 1. **You Must Connect First:** Because this script modifies an *existing* saved network profile, **you must connect to the target Wi-Fi network at least once normally** before running the script. This allows NetworkManager to create the connection profile that the script will then target and anonymize.
 2. **Profile-Specific Permanence:** The obfuscation settings are **permanent for the specific network you target**. Every time you connect to that specific Wi-Fi network in the future, your identity will remain hidden. However, it does *not* apply globally. You must run this script for each new Wi-Fi network you want to be anonymous on.
 
-## Features
+## 🚀 Features
 
-- **Randomized MAC Address**: Configures both Wi-Fi and Ethernet MAC addresses to randomize upon connection (`wifi.cloned-mac-address random`).
-- **Erased Hostname**: Prevents your device from broadcasting its hostname via DHCP Option 12.
-- **Scrubbed Client ID**: Overrides identifiable DHCP Client IDs to generic MAC-based traces.
-- **Ghost Vendor Class**: Injects a blank space into the Vendor Class Identifier (Option 60), hiding your OS and device type.
-- **IPv6 Leak Protection**: Completely disables IPv6 for the target connection to prevent tracking via static IPv6 addresses.
-- **Auto-Restart**: Automatically restarts the connection to immediately apply your new, spoofed network identity.
+- 🔀 **Randomized MAC Address**: Configures both Wi-Fi and Ethernet MAC addresses to randomize upon connection (`wifi.cloned-mac-address random`).
+- 🛑 **Erased Hostname**: Prevents your device from broadcasting its hostname via DHCP Option 12.
+- 🧹 **Scrubbed Client ID**: Overrides identifiable DHCP Client IDs to generic MAC-based traces.
+- 👻 **Ghost Vendor Class**: Injects a blank space into the Vendor Class Identifier (Option 60), hiding your OS and device type.
+- 🚫 **IPv6 Leak Protection**: Completely disables IPv6 for the target connection to prevent tracking via static IPv6 addresses.
+- 🔄 **Auto-Restart**: Automatically restarts the connection to immediately apply your new, spoofed network identity.
 
-## Prerequisites
+## 📋 Prerequisites
 
 Ensure you have the following installed on your Linux system:
 - `nmcli` (NetworkManager Command Line Interface) - Usually pre-installed on most modern Linux distributions.
 - `figlet` *(Optional)* - Used to generate the terminal banner. (`sudo apt-get install figlet`)
 
-## Installation & Setup (Global Access)
+## 🛠️ Installation & Setup (Global Access)
 
 To make the script easily accessible from anywhere on your system (so you don't have to navigate to the folder every time you join a new Wi-Fi), you can add it to your local user binary directory.
 
@@ -58,7 +58,7 @@ To make the script easily accessible from anywhere on your system (so you don't 
    sudo cp dhcp-obfuscator.sh /usr/local/bin/dhcp-obfuscator
    ```
 
-## Usage
+## 💻 Usage
 
 1. **Connect to the target Wi-Fi network.** (This ensures the connection profile exists).
 2. **Run the tool from your terminal:**
@@ -81,6 +81,6 @@ To make the script easily accessible from anywhere on your system (so you don't 
 <!-- IMAGE PLACEHOLDER: Place a screenshot here showing the "SUCCESS" output -->
 *(Insert a screenshot of the successful spoofing output here)*
 
-## License
+## 📄 License
 
 This project is open-source. See the [LICENSE](LICENSE) file for more information.
