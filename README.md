@@ -1,4 +1,4 @@
-# 🕵️‍♂️ DHCP Obfuscator: Network Identity Anonymizer
+# 🕵️‍♂️ DHCP Obfuscator: Network Identity Anonymizer on Linux
 
 [![License](https://img.shields.io/badge/License-See_File-blue.svg)](https://github.com/gekko4/dhcp-obfuscator/blob/master/LICENSE)
 ![Language](https://img.shields.io/badge/Language-Bash-green.svg)
