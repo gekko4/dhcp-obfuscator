@@ -6,7 +6,7 @@
 
 DHCP Obfuscator is a lightweight, interactive utility to anonymize your network footprint by stripping identifiable metadata from your DHCP requests. 
 
-> **Note:** We are starting with **Linux** for this script. If you are on **Windows** or **macOS**, scroll down to the [Alternatives for macOS & Windows](#-alternatives-for-macos--windows) section at the bottom to see how you can achieve similar privacy protections!
+> **Note:** We are starting with **Linux** for this script. If you are on **Windows** or **macOS**, scroll down to the [Alternatives for macOS & Windows](#alternatives-for-macos--windows) section at the bottom to see how you can achieve similar privacy protections!
 
 ---
 
