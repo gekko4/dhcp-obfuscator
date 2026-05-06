@@ -1,4 +1,4 @@
-# 🕵️‍♂️ DHCP Obfuscator: Network Identity Anonymizer
+#  DHCP Obfuscator: A Network Identity Anonymizer
 
 [![License](https://img.shields.io/badge/License-See_File-blue.svg)](https://github.com/gekko4/dhcp-obfuscator/blob/master/LICENSE)
 ![Language](https://img.shields.io/badge/Language-Bash-green.svg)
@@ -10,13 +10,13 @@ DHCP Obfuscator is a lightweight, interactive utility to anonymize your network 
 
 ---
 
-## 📖 Overview
+##  Overview
 
 When you connect to a network, your device leaks metadata by default. Network administrators and eavesdroppers can see your device's original MAC address, hostname, operating system details, and client IDs.
 
 This script hardens your connection by modifying your **NetworkManager** connection properties via `nmcli`. It prevents local networks (like public Wi-Fi, cafes, or hotel networks) from profiling your device.
 
-### ⚠️ Crucial Details You Should Know
+###  Crucial Details You Should Know
 
 1. **Profile Existence & Proximity:** You do not need to be actively connected when running the script, but you **must have connected to the network at least once in the past** so your system has a saved profile for it.
 2. **Profile-Specific Permanence:** The obfuscation settings are **permanent for the specific network you target**. Every time you connect to that Wi-Fi network in the future, your identity will remain masked.
@@ -32,13 +32,13 @@ This script hardens your connection by modifying your **NetworkManager** connect
 - **Auto-Restart**: Automatically restarts the connection to immediately apply your new, spoofed network identity.
 
 
-## 📋 Prerequisites
+##  Prerequisites
 
 Ensure you have the following installed on your Linux system:
 - `nmcli` (NetworkManager Command Line Interface) - Usually pre-installed on most modern Linux distributions.
 - `figlet` *(Optional)* - Used to generate the terminal banner. (`sudo apt-get install figlet`)
 
-## 🛠️ Installation
+##  Installation
 
 1. **Clone the repository:**
    ```bash
@@ -57,7 +57,7 @@ Ensure you have the following installed on your Linux system:
    chmod +x dhcp-obfuscator.sh
    ```
 
-## 💻 Usage
+##  Usage
 
 You can run this script locally from the cloned directory, or install it globally for convenience.
 
@@ -108,6 +108,6 @@ While you cannot easily get the "full package" of per-network DHCP scrubbing (li
 *   **Hostname Blending:** Similar to Windows, you cannot easily stop macOS from sending a hostname. Instead, change your global system name to something generic via Terminal: `sudo scutil --set HostName "Generic-Name"`.
 *   **Disable IPv6:** Disable IPv6 for Wi-Fi via Terminal: `networksetup -setv6off Wi-Fi`.
 
-## 📄 License
+##  License
 
 This project is open-source. See the [LICENSE](LICENSE) file for more information.
