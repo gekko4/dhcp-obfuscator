@@ -1,34 +1,36 @@
-#  DHCP Obfuscator: A Network Identity Anonymizer
+#  DHCP Obfuscator: A Local Network Identity Anonymizer
 
 [![License](https://img.shields.io/badge/License-See_File-blue.svg)](https://github.com/gekko4/dhcp-obfuscator/blob/master/LICENSE)
 ![Language](https://img.shields.io/badge/Language-Bash-green.svg)
 ![Dependencies](https://img.shields.io/badge/Dependencies-nmcli%20%7C%20figlet-orange.svg)
 
-DHCP Obfuscator is a lightweight, interactive utility to anonymize your network footprint by stripping identifiable metadata from your DHCP requests. 
+DHCP Obfuscator is a lightweight, interactive utility to anonymize your local network footprint by stripping identifiable metadata from your DHCP requests sent to the local router. 
 
-> **Note:** We are starting with **Linux** for this script. If you are on **Windows** or **macOS**, scroll down to the [Alternatives for macOS & Windows](#alternatives-for-macos--windows) section at the bottom to see how you can achieve similar privacy protections!
+> **Note:** We are starting with **Linux** for this script. If you are on **Windows** or **macOS**, scroll down to the [Alternatives for macOS & Windows](#alternatives-for-macos--windows) section at the bottom!
 
 ---
 
 ##  Overview
 
-When you connect to a network, your device leaks metadata by default. Network administrators and eavesdroppers can see your device's original MAC address, hostname, operating system details, and client IDs.
+When you connect to a network, your device leaks metadata to the local network by default. Local network administrators and eavesdroppers can see your device's original MAC address, hostname, operating system details, and client IDs.
 
-This script hardens your connection by modifying your **NetworkManager** connection properties via `nmcli`. It prevents local networks (like public Wi-Fi, cafes, or hotel networks) from profiling your device.
+This script hardens your connection by modifying your **NetworkManager** connection properties via `nmcli`. It prevents local networks (like public Wi-Fi, cafes, or hotel networks) from profiling your device. 
+
+**Important Note:** This tool only anonymizes your identity at the local router/LAN level. It does **not** hide your public IP address from the internet, encrypt your web traffic, or act as a VPN/proxy. It purely obfuscates the metadata your device broadcasts to the local network hardware (routers and switches) when requesting a local IP address.
 
 ###  Crucial Details You Should Know
 
-1. **Profile Existence & Proximity:** You do not need to be actively connected when running the script, but you **must have connected to the network at least once in the past** so your system has a saved profile for it.
-2. **Profile-Specific Permanence:** The obfuscation settings are **permanent for the specific network you target**. Every time you connect to that Wi-Fi network in the future, your identity will remain masked.
+1. **Profile Existence & Proximity:** You do not need to be actively connected when running the script, but you **must have connected to the network at least once in the past** so your system has a saved network profile.
+2. **Profile-Specific Permanence:** The obfuscation settings are **permanent for the specific network you target**. Every time you connect to that Wi-Fi network in the future, your local network identity will remain obfuscated unless you delete the profile or manually revert the settings.
 
 ## Features
 
 - **Randomized MAC Address**: Configures the connection to generate a *new*, random MAC address every single time you reconnect (`wifi.cloned-mac-address random`). 
-  *(Note: Network switches and routers require a MAC address to successfully route traffic to your device, meaning it cannot simply be deleted or left completely blank. Constantly randomizing it ensures you cannot be tracked across sessions).*
+  *(Note: Network switches and routers require a MAC address to successfully route traffic to your device, meaning it cannot simply be deleted or left completely blank. Constantly randomizing it ensures they cannot track your specific device over time.)*
 - **Erased Hostname**: Prevents your device from broadcasting its hostname via DHCP Option 12 entirely.
 - **Scrubbed Client ID**: Overrides identifiable DHCP Client IDs to generic MAC-based traces.
-- **Ghost Vendor Class**: Injects a blank space into the Vendor Class Identifier (Option 60), hiding your OS and device type.
-- **IPv6 Leak Protection**: Completely disables IPv6 for the target connection to prevent tracking via static IPv6 addresses.
+- **Ghost Vendor Class**: Injects a blank space into the Vendor Class Identifier (Option 60), hiding your OS and device type from the local network.
+- **IPv6 Leak Protection**: Completely disables IPv6 for the target connection to prevent tracking via static IPv6 addresses on the local network.
 - **Auto-Restart**: Automatically restarts the connection to immediately apply your new, spoofed network identity.
 
 
@@ -96,16 +98,16 @@ Done!
 
 Because this script relies entirely on `nmcli` (NetworkManager), it is **strictly for Linux** and cannot be run on macOS or Windows. 
 
-While you cannot easily get the "full package" of per-network DHCP scrubbing (like entirely erasing hostnames, overriding Vendor Class Identifiers, or custom Client IDs) on these operating systems without advanced third-party tools, you can manually reproduce some of the core features:
+While you cannot easily get the "full package" of per-network DHCP scrubbing (like entirely erasing hostnames, overriding Vendor Class Identifiers, or custom Client IDs) on these operating systems without third-party tools, you can still manually apply some basic privacy settings.
 
 ###  Windows
 *   **MAC Randomization:** Windows 10 and 11 have this built-in! Go to **Settings > Network & Internet > Wi-Fi** and toggle on **Random hardware addresses**.
-*   **Hostname Blending:** Unlike Linux (where we can erase the broadcast completely), Windows *will* broadcast your PC name to the network. To protect your identity, you must globally rename your PC to something generic to blend in (e.g., `DESKTOP-12345`) via **System Properties**.
+*   **Hostname Blending:** Unlike Linux (where we can erase the broadcast completely), Windows *will* broadcast your PC name to the network. To protect your identity, you must globally rename your PC to something generic (e.g., "DESKTOP-1234") in **Settings > System > About**.
 *   **Disable IPv6:** Open **Network Connections**, right-click your Wi-Fi adapter, select **Properties**, and uncheck **Internet Protocol Version 6 (TCP/IPv6)**.
 
 ###  macOS
-*   **MAC Spoofing:** Open the Terminal and temporarily spoof your MAC address using: `sudo ifconfig en0 ether <random_mac>` *(replace `en0` with your active adapter and `<random_mac>` with a randomly generated MAC address)*.
-*   **Hostname Blending:** Similar to Windows, you cannot easily stop macOS from sending a hostname. Instead, change your global system name to something generic via Terminal: `sudo scutil --set HostName "Generic-Name"`.
+*   **MAC Spoofing:** Open the Terminal and temporarily spoof your MAC address using: `sudo ifconfig en0 ether <random_mac>` *(replace `en0` with your active adapter and `<random_mac>` with a randomly generated 12-character hex string).*
+*   **Hostname Blending:** Similar to Windows, you cannot easily stop macOS from sending a hostname. Instead, change your global system name to something generic via Terminal: `sudo scutil --set HostName "MacBook-Pro"`.
 *   **Disable IPv6:** Disable IPv6 for Wi-Fi via Terminal: `networksetup -setv6off Wi-Fi`.
 
 ##  License
