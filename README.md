@@ -16,7 +16,7 @@ When you connect to a network, your device leaks metadata to the local network b
 
 This script hardens your connection by modifying your **NetworkManager** connection properties via `nmcli`. It prevents local networks (like public Wi-Fi, cafes, or hotel networks) from profiling your device. 
 
-**Important Note:** This tool only anonymizes your identity at the local router/LAN level. It does **not** hide your public IP address from the internet, encrypt your web traffic, or act as a VPN/proxy. It purely obfuscates the metadata your device broadcasts to the local network hardware (routers and switches) when requesting a local IP address.
+**Important Note:** This tool only anonymizes your identity at the local router/LAN level. It purely obfuscates the metadata your device broadcasts to the local network hardware (routers and switches) when requesting a local IP address. I also vibecoded it and have been using it for a while and pushed an already working version so expect zero commits on the shell which shouldnt serve as a basis to question its authenticity.
 
 ###  Crucial Details You Should Know
 
